@@ -1,4 +1,3 @@
-import axios from 'axios'
 // const USER_ID = parseInt(Math.random() * 1000)
 function generateTime() {
   const timeNow = new Date()
@@ -12,17 +11,27 @@ function generateTime() {
 }
 
 const mockData = [
-  { time: generateTime(),
-    type: 'system',
-    label: 'System',
-    message: 'Welcome to vTerminal, this is an example to show you what this project can do.' },
-    { time: generateTime(), type: 'info', label: 'Info', message: 'Terminal Initializing ............' },
-    { time: generateTime(), type: 'warning', label: 'warning', message: 'This is a Waning Message!' },
-    { time: generateTime(), type: 'error', label: 'Error', message: 'Oops, Something Went Wrong!' },
-    { time: generateTime(), type: 'success', label: 'Success', message: 'Take it easy! Everything OK!' }
+    { time: generateTime(), type: 'info', label: 'Info', message: 'Composer initializing ............' },
+    { time: generateTime(), type: 'system', label: 'System', message: 'Changed current directory to /Users/ridaamirini/resume' },
+    { time: generateTime(), type: 'system', label: 'System', message: 'Using version ^1.0.1 for ridaamirini/resume' },
+    { time: generateTime(), type: 'info', label: 'info', message: 'Loading composer repositories with package information' },
+    { time: generateTime(), type: 'info', label: 'info', message: ' - Installing school/school (v3.1.0): Downloading (100%)' },
+    { time: generateTime(), type: 'info', label: 'info', message: ' - Installing college/college (v6.1.2): Downloading (100%)' },
+    { time: generateTime(), type: 'info', label: 'info', message: ' - Installing self/employeed (v0.5.2): Downloading (100%)' },
+    { time: generateTime(), type: 'info', label: 'info', message: ' - Installing ridaamirini/me (v2.3.4): Downloading (100%)' },
+    { time: generateTime(), type: 'info', label: 'info', message: ' - Installing google/nynan-cat (v10.3.4): Downloading (100%)' },
+    { time: generateTime(), type: 'system', label: 'System', message: 'Writing lock file' },
+    { time: generateTime(), type: 'system', label: 'System', message: 'Generating autoload files' },
+    { time: generateTime(), type: 'success', label: 'Success', message: 'ridaamirini/resume is ready to use.' }
 ]
 
 export default {
+  ridaamirini: {
+      description: 'Reloads the terminal',
+      ridaamirini() {
+        location.reload();
+      }
+  },
   echo: {
     description: 'Echoes input',
     echo(pushToList, input) {
@@ -35,9 +44,9 @@ export default {
       return p
     }
   },
-  defaultTask: {
-    description: 'this is default task.',
-    defaultTask(pushToList) {
+  init: {
+    description: 'This initializes the terminal',
+    init(pushToList) {
       let i = 0
       const p = new Promise(resolve => {
         const interval = setInterval(() => {
@@ -46,7 +55,7 @@ export default {
           i++
           if (!mockData[i]) {
             clearInterval(interval)
-            resolve({ type: 'success', label: 'Success', message: 'Example Over!' })
+            resolve({ type: 'success', label: 'Success', message: 'ridaamirini fully loaded' })
           }
         }, 1000)
       })
@@ -72,25 +81,5 @@ export default {
       })
       return p
     }
-  },
-  chat: {
-    description: 'Chat with a robot',
-    chat(pushToList, input) {
-      input = input.split(' ')[1]
-      axios.post('url', {
-
-      }).then(response => {
-        console.log(response)
-      })
-      const p = new Promise((resolve, reject) => {
-        const url = input.split(' ')[1]
-        if (!url) {
-          reject({ type: 'error', label: 'Error', message: 'a url is required!' })
-          return
-        }
-      })
-      return p
-    }
   }
-
 }

@@ -116,8 +116,11 @@ module.exports = {
         // disallow unnecessary concatenation of literals or template literals
         'no-useless-concat': 'error',
 
+        // eslint no-invalid-regexp: "error"
+        'no-invalid-regexp':'off',
+
         // disallow unnecessary escape characters
-        'no-useless-escape': 'error',
+        // 'no-useless-escape': 'error',
 
         // disallow void operators
         'no-void': 'error',
@@ -177,7 +180,7 @@ module.exports = {
         'func-call-spacing': 'error',
 
         // enforce consistent indentation
-        indent: ['error', 2, {SwitchCase: 1}],
+        indent: ['off', 2, {SwitchCase: 1}],
 
         // enforce the consistent use of either double or single quotes in JSX attributes
         'jsx-quotes': 'error',

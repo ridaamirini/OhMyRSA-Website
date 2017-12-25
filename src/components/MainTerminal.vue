@@ -13,12 +13,12 @@
 
       <div style="position:absolute;top:0;left:0;right:0;overflow:auto;z-index:1;margin-top:30px;max-height:500px" ref="terminalWindow">
         <div class="terminal-window" id="terminalWindow" @click="handleFocus">
-          <p>Welcome to {{title}}.</p>
-          <p>
-            <span class="prompt"></span><span class="cmd">cd {{title}}</span>
+          <p class="toClear">Welcome to {{title}}.</p>
+          <p class="toClear">
+            <span class="prompt"></span><span class="cmd">composer require ridaamirini/resume@latest</span>
           </p>
 
-          <p v-for="(item, index) in messageList" :key="index">
+        <p v-for="(item, index) in messageList" :key="index">
             <span>{{item.time}}</span>
             <span v-if="item.label" :class="item.type">{{item.label}}</span>
             <span class="cmd" v-if="!item.message.list" v-html="item.message"></span>
@@ -36,7 +36,7 @@
           <p v-if="actionResult"> <span class="cmd">{{actionResult}}</span></p>
 
           <p class="terminal-last-line" ref="terminalLastLine"  @click="handleFocus">
-            <span class="prompt" v-if="lastLineContent==='&nbsp'"> \{{title}} </span>
+            <span class="prompt" v-if="lastLineContent==='&nbsp'"></span>
             <span>{{inputCommand}}</span>
             <span :class="lastLineClass" v-html="lastLineContent"></span>
             <input
@@ -59,23 +59,24 @@
   import taskList from './../plugins/taskList'
 
   export default {
-    name: 'VueTerminalEmulator',
+    name: 'MainTerminal',
     data() {
       return {
-        title: 'vTerminal',
+        title: 'OhMyRSA',
         messageList: [],
         actionResult: '',
         lastLineContent: '...',
         inputCommand: '',
         supportingCommandList: '',
         historyIndex: 0,
-        commandHistory: []
+        commandHistory: [],
+        draggabilly: null
       }
     },
     props: {
-      defaultTask: {
+      init: {
         required: false,
-        default: 'defaultTask'
+        default: 'init'
       }
     },
     computed: {
@@ -89,10 +90,10 @@
     },
     created() {
       this.supportingCommandList = Object.keys(commandList).concat(Object.keys(taskList))
-      this.handleRun(this.defaultTask).then(() => {
+      this.handleRun(this.init).then(() => {
         this.pushToList({ level: 'System', message: 'Type "help" to get a supporting command list.' })
         this.handleFocus()
-      })
+      });
     },
     methods: {
       handleFocus() {
@@ -105,7 +106,7 @@
         }
         this.commandHistory.push(this.inputCommand)
         this.historyIndex = this.commandHistory.length
-        this.pushToList({ message: `$ \\ ${this.title} ${this.inputCommand} ` })
+        this.pushToList({ message: `MacBookFair:~  ridaamirini$ ${this.inputCommand} ` })
         if (!this.inputCommand) return
         const commandArr = this.inputCommand.split(' ')
         if (commandArr[0] === 'help') {
@@ -114,6 +115,11 @@
           commandList[this.inputCommand].messages.map(item => this.pushToList(item))
         } else if (taskList[this.inputCommand.split(' ')[0]]) {
           this.handleRun(this.inputCommand.split(' ')[0], this.inputCommand)
+        } else if (commandArr[0] === 'clear') {
+          this.messageList = [];
+          this.commandHistory = [];
+          this.historyIndex = this.commandHistory.length
+          document.querySelectorAll('p.toClear').forEach(el => el.remove())
         } else {
           this.pushToList({ level: 'System', message: 'Unknown Command.' })
           this.pushToList({ level: 'System', message: 'type "help" to get a supporting command list.' })
@@ -177,9 +183,10 @@
         })
       },
       stringToUrl(str) {
-        const reg = new RegExp('([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?')
+        // const reg = new RegExp('((http[s]?|ftp):/)?/?([^/\s]+)((/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)');
 
-        return str.replace(reg, url => '<a href="' + url + '">' + url + '</a>')
+        // return str.replace(reg, url => '<a href="' + url + '">' + url + '</a>')
+        return str
       }
     }
   }
@@ -198,8 +205,8 @@
 
 .terminal .terminal-window {
   padding-top: 50px;
-  background-color: rgb(3, 9, 36);
-  min-height: 140px;
+  background-color: rgba(0, 0, 0, 0.95);
+  min-height: 240px;
   padding: 20px;
   font-weight: normal;
   font-family: Monaco, Menlo, Consolas, monospace;
@@ -247,7 +254,7 @@
   width: 12px;
   height: 12px;
   border-radius: 6px;
-  background-color: rgb(3, 9, 36);
+  background-color: rgba(0, 0, 0, 0.95);
   margin-left: 6px
 }
 
@@ -290,8 +297,11 @@
   margin: 0;
 }
 
+/*
+    Prompt
+ */
 .terminal .terminal-window .prompt::before {
-  content: "$";
+  content: "MacBookFair:~ ridaamirini$";
   margin-right: 10px;
 }
 

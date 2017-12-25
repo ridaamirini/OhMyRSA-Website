@@ -1,20 +1,24 @@
 <template>
   <div id="app">
-    <vue-terminal-emulator></vue-terminal-emulator>
+    <main-terminal></main-terminal>
   </div>
 </template>
 
 <script>
 
-import VueTerminalEmulator from './components/VueTerminalEmulator'
+import MainTerminal from './components/MainTerminal'
 
 export default {
   name: 'app',
-  components: { VueTerminalEmulator }
+  components: { MainTerminal }
 }
 </script>
 
 <style>
+body {
+  background: url('/static/assets/desktop.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

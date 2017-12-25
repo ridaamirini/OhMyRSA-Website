@@ -1,8 +1,7 @@
 {
-  "name": "vue-terminal-emulator",
+  "name": "website",
   "version": "1.0.0",
-  "description": "A terminal emulator in Vue",
-  "author": "dongsuo <xuxiaofei1.0@outlook.com>",
+  "description": "A terminal website",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -12,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "draggabilly": "^2.1.1",
     "sass-loader": "^6.0.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
