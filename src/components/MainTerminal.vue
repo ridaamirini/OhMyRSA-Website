@@ -1,17 +1,16 @@
 <template>
   <div style="width:60%;margin:0 auto;" class="terminal">
     <div style="position:relative">
-
-      <div class="header">
-        <h4>{{title}}</h4>
-        <ul class="shell-dots">
-          <li class="red"></li>
-          <li class="yellow"></li>
-          <li class="green"></li>
-        </ul>
-      </div>
-
-      <div style="position:absolute;top:0;left:0;right:0;overflow:auto;z-index:1;margin-top:30px;max-height:500px" ref="terminalWindow">
+      <vue-draggable-resizable :resizable="false">
+        <div class="header">
+          <h4>{{title}}</h4>
+          <ul class="shell-dots">
+            <li class="fa red"></li>
+            <li class="fa yellow"></li>
+            <li class="fa green"></li>
+          </ul>
+        </div>
+        <div style="position:absolute;top:0;left:0;right:0;overflow:auto;z-index:1;margin-top:30px;max-height:500px" ref="terminalWindow">
         <div class="terminal-window" id="terminalWindow" @click="handleFocus">
           <p class="toClear">Welcome to {{title}}.</p>
           <p class="toClear">
@@ -50,11 +49,11 @@
           </p>
         </div>
       </div>
+      </vue-draggable-resizable>
     </div>
   </div>
 </template>
 <script>
-
   import commandList from './../plugins/commandList'
   import taskList from './../plugins/taskList'
 
@@ -191,9 +190,23 @@
     }
   }
 
-</script>
+  import Vue from 'vue'
+  import VueDraggableResizable from 'vue-draggable-resizable'
 
+  Vue.component('vue-draggable-resizable', VueDraggableResizable);
+
+</script>
 <style scoped lang="scss">
+.draggable:hover {
+  cursor: default !important;
+}
+
+.vdr {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 580px;
+}
+
 .terminal {
   position: relative;
   width: 100%;
@@ -259,15 +272,45 @@
 }
 
 .terminal .header ul.shell-dots li.red {
+  position: relative;
   background-color: rgb(200, 48, 48);
 }
 
+.terminal .header ul.shell-dots li.red:hover::before {
+  position: absolute;
+  display: block;
+  content: "\f00d";
+  color: white;
+  margin: 1px 0 0 3px;
+  font-size: 9px;
+}
+
 .terminal .header ul.shell-dots li.yellow {
+  position: relative;
   background-color: rgb(247, 219, 96);
 }
 
+.terminal .header ul.shell-dots li.yellow:hover::before {
+    position: absolute;
+    display: block;
+    content: "\f068";
+    color: white;
+    margin: 1px 0 0 2px;
+    font-size: 9px;
+}
+
 .terminal .header ul.shell-dots li.green {
+  position: relative;
   background-color: rgb(46, 201, 113);
+}
+
+.terminal .header ul.shell-dots li.green:hover::before {
+    position: absolute;
+    display: block;
+    content: "\f067";
+    color: white;
+    margin: 1px 0 0 2px;
+    font-size: 9px;
 }
 
 .terminal .header {
@@ -280,7 +323,9 @@
   text-align: center;
   padding: 2px;
   border-top-left-radius: 4px;
-  border-top-right-radius: 4px
+  border-top-right-radius: 4px;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .terminal .header h4 {

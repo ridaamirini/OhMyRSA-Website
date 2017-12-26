@@ -18,6 +18,7 @@ export default {
 body {
   background: url('/static/assets/desktop.jpg') no-repeat center center fixed;
   background-size: cover;
+  overflow: hidden;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
